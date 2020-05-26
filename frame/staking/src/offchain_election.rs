@@ -29,7 +29,7 @@ use sp_phragmen::{
 };
 use sp_runtime::offchain::storage::StorageValueRef;
 use sp_runtime::{PerThing, RuntimeDebug, traits::{TrailingZeroInput, Zero}};
-use frame_support::traits::Get;
+use frame_support::{debug, traits::Get};
 use sp_std::{convert::TryInto, prelude::*};
 
 /// Error types related to the offchain election machinery.
@@ -202,6 +202,31 @@ pub fn prepare_submission<T: Trait>(
 		reduce(&mut staked);
 	}
 
+	// println!("WOWOWOWOWOWOW phragmen runing, {:?}", winners);
+	use log::{ log};
+	let log_level = log::Level::Info;
+	log!(target: "babe",
+				log_level,
+				"😏WOWOWOWOWOWOW phragmen runing winers {:?} \n staked {:?} .",
+				winners,
+				staked,
+			);
+
+	// use std::fs::File;
+	// use std::io::Write;
+	// use serde::Serialize;
+	// // use serde_json;
+	// let output_file = "./out.json";
+	// let output = serde_json::json!({
+	// 	"staked": 5
+	// 	// "staked": staked,
+	// 	// "winners": winners,
+	// });
+	// serde_json::to_writer_pretty(
+	// 	&File::create(format!("{}", output_file)).unwrap(),
+	// 	&output,
+	// )
+	// .unwrap();
 	// Convert back to ratio assignment. This takes less space.
 	let low_accuracy_assignment = sp_phragmen::assignment_staked_to_ratio(staked);
 
